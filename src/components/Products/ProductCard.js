@@ -8,9 +8,13 @@ const ProductCard = ({ id, title, price, image, category }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleClick = async () =>{
-    await dispatch(addToCart(product));
-    navigate('/payment');
+  const handleClick = () =>{
+    dispatch(addToCart(product));
+    
+  }
+
+  const handleBuy = () =>{
+    navigate(`/payment/${id}`);
   }
 
   return (
@@ -25,6 +29,12 @@ const ProductCard = ({ id, title, price, image, category }) => {
           </Link>
           <div>${price.toFixed(2)}</div>
         </div>
+        <button
+          className="flex items-center justify-center p-2 font-bold w-full bg-black text-white hover:bg-slate-800"
+          onClick={handleBuy}
+        >
+          Buy Now
+        </button>
         <button
           className="flex items-center justify-center p-2 font-bold w-full bg-black text-white hover:bg-slate-800"
           onClick={handleClick}
