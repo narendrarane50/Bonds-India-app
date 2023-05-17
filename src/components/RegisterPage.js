@@ -1,22 +1,34 @@
-import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    setName,
-    setUsername,
-    setPassword,
-    setConfirmPassword,
-    setRegistrationSuccess,
-  } from '../state/actions/register';
+// import {
+//     setName,
+//     setUsername,
+//     setPassword,
+//     setConfirmPassword,
+//     setRegistrationSuccess,
+//   } from '../state/actions/register';
+
+import { addRegistrationDetails, setRegistrationSuccess, setRegistrationError } from '../state/actions/register';
 
 const RegistrationPage = () => {
   const [name1, setName1] = useState('');
   const [username1, setUsername1] = useState('');
   const [password1, setPassword1] = useState('');
   const [confirmPassword1, setConfirmPassword1] = useState('');
+  const navigate = useNavigate();
+  const [navState,setNavState]= useState(false);
   
   
   const dispatch = useDispatch();
+  const registrationError = useSelector((state) => state.registration.registrationError);
+//   const registration = useSelector((state) => state.registration);
+
+
+
+  
+  
+
 
   const handleNameChange = (event) => {
     setName1(event.target.value);
@@ -38,20 +50,44 @@ const RegistrationPage = () => {
     
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle registration logic here
-    // console.log('Name:', name);
-    // console.log('Username:', username);
-    // console.log('Password:', password);
-    // console.log('Confirm Password:', confirmPassword);
-    dispatch(setName(name1));
-    dispatch(setUsername(username1));
-    dispatch(setPassword(password1));
-    dispatch(setConfirmPassword(confirmPassword1));
-    dispatch(setRegistrationSuccess(true));
-    // You can replace the console.log statements with your actual registration logic
-  };
+
+    const registrationDetails = {
+        name: name1,
+        username: username1,
+        password: password1,
+        confirmPassword: confirmPassword1
+      };
+    
+    // dispatch(setName(name1));
+    // dispatch(setUsername(username1));
+    // dispatch(setPassword(password1));
+    // dispatch(setConfirmPassword(confirmPassword1));
+    // dispatch(setRegistrationSuccess(true));
+  
+      // Dispatch the action to add the registration details
+      await dispatch(addRegistrationDetails(registrationDetails));
+  
+      // Dispatch the action to set registration success to true
+      await dispatch(setRegistrationSuccess(true));
+
+    
+      setNavState(true);
+      
+
+    
+      
+    };
+
+    if(registrationError==='' && navState===true){
+        setTimeout(() => {
+            navigate('/');
+          });
+    }
+  
+    
+  
 
   const handleLogin = () => {
     // Handle login navigation logic here
@@ -153,7 +189,9 @@ const RegistrationPage = () => {
                 />
               </div>
             </div>
-
+            <div>
+            {registrationError && <p className='text-red-500'>{registrationError}</p>}
+            </div>
             <div>
               <button
                 type="submit"
