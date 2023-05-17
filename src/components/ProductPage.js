@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Loader from './Loader';
 import { setProduct } from '../state/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector  } from 'react-redux';
 import { addToCart } from '../state/actions/cart';
 import {
   setError,
@@ -15,8 +15,9 @@ const ProductPage = () => {
   const loadingState = useSelector((state) => state.loadingState);
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
-  const { title, price, image, description } = product;
+  const { id, title, price, image, description } = product;
   const state = useSelector((state) => state);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(state);
@@ -43,6 +44,10 @@ const ProductPage = () => {
       dispatch(setError(true));
     }
   };
+
+  const handleBuy = () =>{
+    navigate(`/payment/${id}`);
+  }
 
   if (loadingState.loading) {
     return (
@@ -75,7 +80,13 @@ const ProductPage = () => {
           </h2>
           <p className="my-4">{description}</p>
           <button
-            className="flex items-center justify-center p-2 font-bold w-full bg-black text-white hover:bg-slate-800"
+          className="flex items-center justify-center p-2 font-bold w-full bg-black text-white hover:bg-slate-800"
+          onClick={handleBuy}
+        >
+          Buy Now
+        </button>
+          <button
+            className="flex mt-4 items-center justify-center p-2 font-bold w-full bg-black text-white hover:bg-slate-800"
             onClick={() => dispatch(addToCart(product))}
           >
             Add to cart
