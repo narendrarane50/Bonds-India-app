@@ -41,10 +41,11 @@ const RegistrationPage = () => {
       alert("password should be same as confirm password");
       return;
     }
-    if (password1.length !== 8) {
+    else if (password1.length !== 8) {
       alert("password should be atleast 8 characters");
       return;
     }
+    else{
     event.preventDefault();
 
     const registrationDetails = {
@@ -61,6 +62,7 @@ const RegistrationPage = () => {
     await dispatch(setRegistrationSuccess(true));
 
     setNavState(true);
+    }
   };
 
   if (registrationError === "" && navState === true) {

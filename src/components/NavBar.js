@@ -66,12 +66,14 @@ const NavBar = (props) => {
           ''
         )}
       </div>
+      <Link to='/'>
       <button
         className="ml-4 rounded-full px-4 py-2 bg-red-500 text-white font-bold hover:bg-red-600"
         onClick={() => props.setIsLogin(false)}
       >
         Logout
       </button>
+      </Link>
     </nav>
   </div>
 </header>

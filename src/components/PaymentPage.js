@@ -18,10 +18,8 @@ const PaymentPage = () => {
   const product = useSelector((state) => state.product);
   const { id, title, price, image } = product;
   const state = useSelector((state) => state);
-  const [rate1,setRate1] = useState(product.price);
-  const [count,setCount] = useState(1);
-  console.log(price)
-  console.log(rate1)
+  
+  
   
 
   useEffect(() => {
@@ -30,9 +28,13 @@ const PaymentPage = () => {
     loadProducts();
   }, []);
 
+  
+  
+
   const loadProducts = async () => {
     dispatch(setProduct(await fetchProduct()));
   };
+  
 
   const fetchProduct = async () => {
     try {
@@ -49,19 +51,9 @@ const PaymentPage = () => {
     }
   };
 
-  const handleincrement = () =>{
-    setCount(count+1)
-    setRate1(rate1+price)
-    
-  }
+  
 
-  const handledecrement = () =>{
-    if(count>1){
-      setCount(count-1)
-      setRate1(rate1-price)
-      
-    }
-  }
+  
 
   if (loadingState.loading) {
     return (
@@ -90,18 +82,10 @@ const PaymentPage = () => {
           <h1 className="text-3xl font-bold">{title}</h1>
           <div className="h-1 w-4/12 mt-2 bg-black"></div>
 
-          <div className="flex items-center mt-4">
-            <button onClick={handledecrement} className="mr-5 text-2xl bg-gray-300 text-gray-700 rounded-full w-12 h-12 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50">
-              -
-            </button>
-            <span className="mr-5 text-2xl">{count}</span>
-            <button onClick={handleincrement} className="text-2xl bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-              +
-            </button>
-          </div>
+          
 
           <h2 className="text-2xl font-bold mt-4">
-            {price && `$${rate1.toFixed(2)}`}
+            {price && `$${price.toFixed(2)}`}
           </h2>
 
           <button

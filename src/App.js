@@ -12,7 +12,7 @@ import RegistrationPage from "./components/RegisterPage";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
-  //const [count,setCount] = useState(1);
+  
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -40,7 +40,6 @@ function App() {
     </div>
   );
 }
-//count={count} setCount={setCount}
-//count={count}
+
 
 export default App;
