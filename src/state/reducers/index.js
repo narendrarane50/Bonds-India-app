@@ -4,6 +4,7 @@ import productReducer from './product';
 import cartReducer from './cart';
 import filterReducer from './filter';
 import loadingStatesReducer from './loadingStates';
+import registrationReducer from './register';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   loadingState: loadingStatesReducer,
   filter: filterReducer,
   product: productReducer,
+  registration: registrationReducer,
 });
 
 export default rootReducer;
