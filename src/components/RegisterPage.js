@@ -1,99 +1,74 @@
-import React, {  useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-// import {
-//     setName,
-//     setUsername,
-//     setPassword,
-//     setConfirmPassword,
-//     setRegistrationSuccess,
-//   } from '../state/actions/register';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import { addRegistrationDetails, setRegistrationSuccess, setRegistrationError } from '../state/actions/register';
+import {
+  addRegistrationDetails,
+  setRegistrationSuccess,
+} from "../state/actions/register";
 
 const RegistrationPage = () => {
-  const [name1, setName1] = useState('');
-  const [username1, setUsername1] = useState('');
-  const [password1, setPassword1] = useState('');
-  const [confirmPassword1, setConfirmPassword1] = useState('');
+  const [name1, setName1] = useState("");
+  const [username1, setUsername1] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [confirmPassword1, setConfirmPassword1] = useState("");
   const navigate = useNavigate();
-  const [navState,setNavState]= useState(false);
-  
-  
+  const [navState, setNavState] = useState(false);
+
   const dispatch = useDispatch();
-  const registrationError = useSelector((state) => state.registration.registrationError);
-//   const registration = useSelector((state) => state.registration);
-
-
-
-  
-  
-
+  const registrationError = useSelector(
+    (state) => state.registration.registrationError
+  );
 
   const handleNameChange = (event) => {
     setName1(event.target.value);
-    
   };
 
   const handleUsernameChange = (event) => {
     setUsername1(event.target.value);
-    
   };
 
   const handlePasswordChange = (event) => {
     setPassword1(event.target.value);
-    
   };
 
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword1(event.target.value);
-    
   };
 
   const handleSubmit = async (event) => {
+    if (password1 !== confirmPassword1) {
+      alert("password should be same as confirm password");
+      return;
+    }
+    if (password1.length !== 8) {
+      alert("password should be atleast 8 characters");
+      return;
+    }
     event.preventDefault();
 
     const registrationDetails = {
-        name: name1,
-        username: username1,
-        password: password1,
-        confirmPassword: confirmPassword1
-      };
-    
-    // dispatch(setName(name1));
-    // dispatch(setUsername(username1));
-    // dispatch(setPassword(password1));
-    // dispatch(setConfirmPassword(confirmPassword1));
-    // dispatch(setRegistrationSuccess(true));
-  
-      // Dispatch the action to add the registration details
-      await dispatch(addRegistrationDetails(registrationDetails));
-  
-      // Dispatch the action to set registration success to true
-      await dispatch(setRegistrationSuccess(true));
-
-    
-      setNavState(true);
-      
-
-    
-      
+      name: name1,
+      username: username1,
+      password: password1,
+      confirmPassword: confirmPassword1,
     };
 
-    if(registrationError==='' && navState===true){
-        setTimeout(() => {
-            navigate('/');
-          });
-    }
-  
-    
-  
+    // Dispatch the action to add the registration details
+    await dispatch(addRegistrationDetails(registrationDetails));
 
-  const handleLogin = () => {
-    // Handle login navigation logic here
-    console.log('Login');
-    // You can replace the console.log statement with your actual login navigation logic
+    // Dispatch the action to set registration success to true
+    await dispatch(setRegistrationSuccess(true));
+
+    setNavState(true);
   };
+
+  if (registrationError === "" && navState === true) {
+    setTimeout(() => {
+      navigate("/");
+    });
+  }
+
   const registration = useSelector((state) => state.registration);
 
   console.log(registration);
@@ -101,16 +76,17 @@ const RegistrationPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create an account</h2>
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Create an account
+        </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Or{' '}
-          <Link to='/'>
-          <button
-            onClick={handleLogin}
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            log in to your account
-          </button>
+          Or{" "}
+          <Link to="/">
+            <button
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
+              log in to your account
+            </button>
           </Link>
         </p>
       </div>
@@ -119,7 +95,10 @@ const RegistrationPage = () => {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Name
               </label>
               <div className="mt-1">
@@ -137,7 +116,10 @@ const RegistrationPage = () => {
             </div>
 
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Username
               </label>
               <div className="mt-1">
@@ -155,7 +137,10 @@ const RegistrationPage = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="mt-1">
@@ -173,7 +158,10 @@ const RegistrationPage = () => {
             </div>
 
             <div>
-              <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="confirm-password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Confirm Password
               </label>
               <div className="mt-1">
@@ -190,7 +178,9 @@ const RegistrationPage = () => {
               </div>
             </div>
             <div>
-            {registrationError && <p className='text-red-500'>{registrationError}</p>}
+              {registrationError && (
+                <p className="text-red-500">{registrationError}</p>
+              )}
             </div>
             <div>
               <button

@@ -6,6 +6,7 @@ import filterReducer from './filter';
 import loadingStatesReducer from './loadingStates';
 import registrationReducer from './register';
 import { combineReducers } from 'redux';
+import loginReducer from './login';
 
 const rootReducer = combineReducers({
   isCartOpen: isCartOpenReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   filter: filterReducer,
   product: productReducer,
   registration: registrationReducer,
+  login: loginReducer,
 });
 
 export default rootReducer;

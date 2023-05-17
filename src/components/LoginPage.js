@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
-import {  useSelector } from 'react-redux';
-
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../state/actions/login";
 
 const LoginPage = (props) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const registrationDetails = useSelector((state) => state.registration.registrationDetails);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const registrationDetails = useSelector(
+    (state) => state.registration.registrationDetails
+  );
+  const dispatch = useDispatch();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -16,37 +19,39 @@ const LoginPage = (props) => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    // Check if the username and password match the registration details
     const matchingUser = registrationDetails.find(
-        (user) => user.username === username && user.password === password
-      );
-  
-      if (matchingUser) {
-        props.setIsLogin(true);
-      } else {
-        // Dispatch the login failure action
-        alert("Username or password does not exist")
-  
-        // Show an error message or handle the error
-      }
-    // props.setIsLogin(true);
-    // You can replace the console.log statements with your actual login logic
+      (user) => user.username === username && user.password === password
+    );
+
+    if (matchingUser) {
+      await dispatch(login(username, password));
+      props.setIsLogin(true);
+    } else {
+      alert("Username or password does not exist");
+
+      
+    }
+    
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Log in to your account</h2>
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Log in to your account
+        </h2>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Username
               </label>
               <div className="mt-1">
@@ -64,7 +69,10 @@ const LoginPage = (props) => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="mt-1">
@@ -81,26 +89,6 @@ const LoginPage = (props) => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
-
             <div>
               <button
                 type="submit"
@@ -112,14 +100,11 @@ const LoginPage = (props) => {
           </form>
 
           <div className="mt-6">
-            
-            <button
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            ><Link to='/register'>
-              Register
-              </Link>
-            </button>
-            
+            <Link to="/register">
+              <button className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Register
+              </button>
+            </Link>
           </div>
         </div>
       </div>
