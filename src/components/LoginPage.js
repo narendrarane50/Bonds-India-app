@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
+import {  useSelector } from 'react-redux';
+
 
 const LoginPage = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const registrationDetails = useSelector((state) => state.registration.registrationDetails);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -15,10 +18,21 @@ const LoginPage = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle login logic here
-    console.log('Username:', username);
-    console.log('Password:', password);
-    props.setIsLogin(true);
+    
+    // Check if the username and password match the registration details
+    const matchingUser = registrationDetails.find(
+        (user) => user.username === username && user.password === password
+      );
+  
+      if (matchingUser) {
+        props.setIsLogin(true);
+      } else {
+        // Dispatch the login failure action
+        alert("Username or password does not exist")
+  
+        // Show an error message or handle the error
+      }
+    // props.setIsLogin(true);
     // You can replace the console.log statements with your actual login logic
   };
 

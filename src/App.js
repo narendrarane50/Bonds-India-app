@@ -21,7 +21,7 @@ function App() {
       <Routes>
       <Route path="/register" element={<RegistrationPage />} />
       </Routes>
-      {isLogin===true ? <><NavBar />
+      {isLogin===true ? <><NavBar setIsLogin={setIsLogin} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/payment/:productID" element={<PaymentPage />} />
