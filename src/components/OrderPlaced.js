@@ -1,7 +1,7 @@
 import Loader from "./Loader";
 import { useSelector } from "react-redux";
 
-const PaymentPage = () => {
+const PaymentPage = ({count}) => {
   const loadingState = useSelector((state) => state.loadingState);
 
   const product = useSelector((state) => state.product);
@@ -32,6 +32,7 @@ const PaymentPage = () => {
           <img className="h-full" src={image} alt={title} />
         </div>
         <h1 className="text-3xl font-bold">{title}</h1>
+        <h1 className="text-3xl font-bold">{count}</h1>
       </div>
     </div>
   );
