@@ -37,6 +37,7 @@ const RegistrationPage = () => {
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     if (password1 !== confirmPassword1) {
       alert("password should be same as confirm password");
     }
@@ -44,7 +45,7 @@ const RegistrationPage = () => {
       alert("password should be atleast 8 characters");
     }
     else{
-    event.preventDefault();
+    
 
     const registrationDetails = {
       name: name1,
